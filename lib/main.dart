@@ -3,14 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game_template/config.dart';
-import 'package:game_template/src/utils/crashlytics.dart';
 import 'package:logging/logging.dart';
 
 Logger _log = Logger('main.dart');
 
 Future<void> main() async {
   FirebaseCrashlytics? crashlytics;
-  await guardWithCrashlytics(guardedMain, crashlytics: crashlytics);
+  // await guardWithCrashlytics(guardedMain, crashlytics: crashlytics);
 }
 
 /// 로깅과 충돌 보고가 없으면 그냥 void main()임.
@@ -34,7 +33,7 @@ void guardedMain() {
   // Todo: 준비가되면 아래 각 컨트롤러를 완성해야 함.(광고, 게임서비스, 인앱결제)
 
   /// AdsController? adsController;
-  /// GamesServicesController? gamesServicesController;
+  // GameServicesController? gameServicesController;
   /// InAppPurchaseController? inAppPurchaseController;
 
   // Todo: runApp
