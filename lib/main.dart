@@ -31,6 +31,7 @@ void guardedMain() {
       '${record.message}'
     );
   });
+  _log.info('++ 로그 레벨: ${Logger.root.level.toString()}');
 
   WidgetsFlutterBinding.ensureInitialized();
 
