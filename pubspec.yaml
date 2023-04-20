@@ -38,9 +38,9 @@ dependencies:
   # Google Play 게임 서비스 API를 사용하여 게임에 기능을 추가하는 역할
   games_services: ^3.0.1
   # 광고
-  google_mobile_ads: ^2.4.0       # ^2.0.1, Ads
+#  google_mobile_ads: ^2.4.0       # ^2.0.1, Ads
   # 인앱결재
-  in_app_purchase: ^3.1.5         # ^3.0.1  # In-app purchases
+#  in_app_purchase: ^3.1.5         # ^3.0.1  # In-app purchases
   # 메시지 번역, 복수형 및 성별, 날짜/숫자 서식, 양방향 텍스트 등 국제화 및 지역화 기능 지원
   intl: ^0.18.1
 
