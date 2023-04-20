@@ -22,7 +22,7 @@ Future<void> main() async {
 /// 로깅과 충돌 보고가 없으면 그냥 void main()임.
 void guardedMain() {
 
-  Logger.root.level = kReleaseMode ? Level.WARNING: AppCfg.logLevel;
+  Logger.root.level = kReleaseMode ? Level.WARNING: AppCfg.debugLogLevel;
   Logger.root.onRecord.listen((record) {
     debugPrint(
       '${record.level.name}: '

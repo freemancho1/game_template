@@ -8,7 +8,7 @@ class AppCfg {
 
   static const largeWidth = 900;
 
-  static const logLevel = Level.ALL;
+  static const debugLogLevel = Level.ALL;
 
   static String formatTwoDigit(int value) => NumberFormat('00').format(value);
 }
