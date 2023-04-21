@@ -51,6 +51,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        // 추가(추가하지 않고 테스트 해 볼 것, 20이후에는 자동으로 multidex 지원)
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -68,5 +70,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    mplementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.android.support:multidex:2.0.1'
 }
