@@ -33,10 +33,7 @@ class MainMenuScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FilledButton(
-              onPressed: () {
-                // todo: router '/play' 구현 후 구현
-                context.go('/play');
-              },
+              onPressed: () => context.go('/play'),
               child: const Text('Play'),
             ),
             AppCfg.hGap10,

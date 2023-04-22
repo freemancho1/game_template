@@ -27,11 +27,11 @@ const gameLevels = [
   ),
   GameLevel(
     number: 2,
-    difficulty: 33,
+    difficulty: 46,
   ),
   GameLevel(
     number: 3,
-    difficulty: 99,
+    difficulty: 100,
     achievementIdIOS: 'finished',
     achievementIdAndroid: 'fdklasfaDFadsfasf',    /// 임의문자
   ),

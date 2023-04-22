@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game_template/src/app_lifecycle/app_lifecycle.dart';
+import 'package:game_template/src/games_services/score.dart';
 import 'package:game_template/src/level_selection/level_selection_screen.dart';
 import 'package:game_template/src/level_selection/levels.dart';
 import 'package:game_template/src/main_menu/main_menu_screen.dart';
+import 'package:game_template/src/play_session/play_session_screen.dart';
 import 'package:game_template/src/player_progress/persistence/player_progress_persistence.dart';
 import 'package:game_template/src/player_progress/persistence/player_progress_persistence_ls.dart';
 import 'package:game_template/src/player_progress/player_progress.dart';
@@ -16,6 +18,7 @@ import 'package:game_template/src/settings/settings_screen.dart';
 import 'package:game_template/src/style/palette.dart';
 import 'package:game_template/src/style/play_transition.dart';
 import 'package:game_template/src/style/snack_bar.dart';
+import 'package:game_template/src/win_game/win_game_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:game_template/config.dart';
 import 'package:game_template/src/crashlytics/crashlytics.dart';
@@ -122,6 +125,7 @@ class GameMain extends StatelessWidget {
               routerDelegate: _router.routerDelegate,
               /// scaffoldMessengerKey는 [lib/src/style/snack_bar.dart]에 구현됨
               scaffoldMessengerKey: scaffoldMessengerKey,
+              debugShowCheckedModeBanner: false,
             );
           }
         )
@@ -150,10 +154,22 @@ class GameMain extends StatelessWidget {
                   final level = gameLevels
                     .singleWhere((element) => element.number == levelNumber);
                   return buildPlayTransition<void>(
-                    // todo: PlaySessionScreen 개발 후 구현
-                    child: ,
-                    color: color
-                  ),
+                    child: PlaySessionScreen(
+                      level, key: const Key('play session'),),
+                    color: context.watch<Palette>().backgroundPlaySession,
+                  );
+                },
+              ),
+              GoRoute(
+                path: 'won',
+                pageBuilder: (context, state) {
+                  final map = state.extra! as Map<String, dynamic>;
+                  final score = map['score'] as Score;
+                  return buildPlayTransition<void>(
+                    child: WinGameScreen(
+                      score: score, key: const Key('win game'),),
+                    color: context.watch<Palette>().backgroundPlaySession
+                  );
                 }
               )
             ]

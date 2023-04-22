@@ -39,5 +39,12 @@ class AppCfg {
   static const durationCelebration = Duration(milliseconds: 2000);
   static const durationPreCelebration = Duration(milliseconds: 500);
 
+  static const colorConfettiDefault = [
+    Color(0xffd10841),
+    Color(0xff1d75fb),
+    Color(0xff0050bc),
+    Color(0xffa2dcc7),
+  ];
+
   static String formatTwoDigit(int value) => NumberFormat('00').format(value);
 }

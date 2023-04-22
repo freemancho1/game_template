@@ -23,7 +23,11 @@ class LevelSelectionScreen extends StatelessWidget {
             const Padding(
               padding: AppCfg.paddingSLS,
               child: Center(
-                child: Text('Select Level', style: AppCfg.styleSelectLevel,),
+                child: Text(
+                  'Select Level',
+                  style: AppCfg.styleMainTitle,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             AppCfg.gapSLS,
@@ -38,8 +42,14 @@ class LevelSelectionScreen extends StatelessWidget {
                         // todo: AudioController 추가 후 구현
                         context.go('/play/session/${level.number}');
                       },
-                      leading: Text(level.number.toString()),
-                      title: Text('Level #${level.number}'),
+                      leading: Text(
+                        level.number.toString(),
+                        style: AppCfg.styleSettingsItem,
+                      ),
+                      title: Text(
+                        'Level #${level.number}',
+                        style: AppCfg.styleSettingsItem,
+                      ),
                     )
                 ],
               )

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:game_template/config.dart';
+import 'package:game_template/src/games_services/level_state.dart';
 import 'package:game_template/src/games_services/score.dart';
 import 'package:game_template/src/level_selection/levels.dart';
 import 'package:game_template/src/player_progress/player_progress.dart';
+import 'package:game_template/src/style/confetti.dart';
+import 'package:game_template/src/style/palette.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +31,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     // todo: 인앱결제 후 구현
   }
 
-  Future<void> _playWon() async {
+  Future<void> _playerWon() async {
     _log.info('Level ${widget.level.number} won');
 
     final score = Score(
@@ -54,9 +57,79 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     context.go('/play/won', extra: {'score': score});
   }
 
-  // todo: 여기서부터 하자~~~~~~~~~~~
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final palette = context.watch<Palette>();
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LevelState(
+            onWin: _playerWon,
+            goal: widget.level.difficulty,
+          ),
+        )
+      ],
+      child: IgnorePointer(
+        ignoring: _duringCelebration,
+        child: Scaffold(
+          backgroundColor: palette.backgroundPlaySession,
+          body: Stack(
+            children: [
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: InkResponse(
+                        onTap: () => context.go('/settings'),
+                        child: Image.asset(
+                          'assets/images/settings.png',
+                          semanticLabel: 'Settings',
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text('${widget.level.difficulty}%까지 이동하세요.'),
+                    Consumer<LevelState>(
+                      builder: (context, levelState, child) => Slider(
+                        label: 'Level Progress',
+                        autofocus: true,
+                        value: levelState.progress / 100,
+                        onChanged: (value) =>
+                          levelState.setProgress((value*100).round()),
+                        onChangeEnd: (value) => levelState.evaluate(),
+                      )
+                    ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(AppCfg.baseEdgeSize),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () => context.go('/play'),
+                          child: const Text('Back'),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox.expand(
+                child: Visibility(
+                  visible: _duringCelebration,
+                  child: IgnorePointer(
+                    child: Confetti(
+                      isStopped: !_duringCelebration,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
