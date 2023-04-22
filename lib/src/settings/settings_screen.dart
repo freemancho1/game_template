@@ -15,6 +15,8 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsController>();
+    /// context.watch: 상태변화를 주시(변경 시 UI변경)
+    /// context.read: 상태를 즉시 읽어와 처리
     final palette = context.watch<Palette>();
 
     return Scaffold(
@@ -26,13 +28,9 @@ class SettingsScreen extends StatelessWidget {
             const Text(
               'Settings',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 55,
-                height: 1,
-              ),
+              style: AppCfg.styleMainTitle,
             ),
-            AppCfg.hGap10,
+            AppCfg.gapSS,
             const _NameChangeLine('Name'),
             ValueListenableBuilder<bool>(
               valueListenable: settings.soundsOn,
@@ -70,6 +68,10 @@ class _NameChangeLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsController>();
+    /// InkResponse:
+    ///   GestureDetector를 랩핑한 형태로, Meterial Design의 터치 피드백을 지원
+    ///   부모보다 적은 크기의 작은 위젯으로 터치 이벤트만 처리함
+    /// GestureDetector: 가장 일반적인 터치/드레그 등을 지원하는 위젯
     return InkResponse(
       highlightShape: BoxShape.rectangle,
       onTap: () => showGeneralDialog(
@@ -84,20 +86,15 @@ class _NameChangeLine extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 30,
-              ),
+              style: AppCfg.styleSettingsItem,
             ),
             const Spacer(),
             ValueListenableBuilder(
+              /// 아래값이 변경될 때마다 builder를 호출(변경된 값은 'name'으로 감)
               valueListenable: settings.playerName,
-              builder: (context, name, child) => Text(
+              builder: (context, name, _) => Text(
                 "'$name'",
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                ),
+                style: AppCfg.styleSettingsItem,
               ),
             ),
           ],
@@ -111,7 +108,6 @@ class _SettingsLine extends StatelessWidget {
   final String title;
   final Widget icon;
   final VoidCallback? onSelected;
-  // todo: {this.onSelected}를 어떻게 호출하는지 확인.
   const _SettingsLine(this.title, this.icon, {this.onSelected});
 
   @override
@@ -129,10 +125,7 @@ class _SettingsLine extends StatelessWidget {
                 title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                ),
+                style: AppCfg.styleSettingsItem,
               )
             ),
             icon
